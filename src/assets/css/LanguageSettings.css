@@ -1,0 +1,21 @@
+/* src/assets/css/LanguageSettings.css */
+.language-settings {
+  padding: 24px;
+}
+.language-settings h2 {
+  margin-bottom: 16px;
+}
+.language-options {
+  display: flex;
+  gap: 12px;
+}
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.language-option input {
+  cursor: pointer;
+}

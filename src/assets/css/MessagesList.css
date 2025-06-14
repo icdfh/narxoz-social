@@ -1,0 +1,341 @@
+/* src/assets/css/MessagesList.css */
+@import "./common-status.css";
+/* === Страница === */
+.messages-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  height: 100vh;
+ 
+}
+
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #D50032;
+  padding: 16px 24px;
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+}
+.messages-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.messages-icon {
+  width: 28px;
+  height: 28px;
+}
+.messages-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.messages-tabs {
+  display: flex;
+  gap: 10px;
+}
+.messages-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.messages-tab {
+  background: none;
+  border: none;
+  padding: 6px 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.messages-tab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+.messages-tab.active {
+  background: #fff;
+  color: #D50032;
+}
+.messages-search {
+  position: relative;
+}
+.messages-search-input {
+  padding: 6px 36px 6px 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  background-color: white;
+  color: black;
+  height: 22px;
+  flex: 1;
+}
+.messages-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.messages-search-icon {
+  position: absolute;
+  left: 235px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+}
+.messages-add-btn {
+  background-color: #fff;
+  color: #D50032;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.messages-add-btn:hover {
+  background-color: #f2f2f2;
+}
+
+
+
+
+
+/* === Список чатов === */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;  
+  box-sizing: border-box;
+  overflow-y: auto;
+  flex: 1 1 auto;  
+  height: 100vh;
+  
+}
+
+
+
+
+.chat-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #d50032;
+  border-radius: 12px;
+  padding: 12px;
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  transition: background 0.2s;
+  box-sizing: border-box;
+  
+}
+
+.chat-item:hover {
+  background: #c10029;
+}
+
+/* === Аватар и текст === */
+.chat-avatar {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+.chat-info {
+  flex: 1;
+  overflow: hidden;
+}
+
+.chat-title {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-last {
+  font-size: 14px;
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === Бейдж непрочитанных === */
+.chat-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: white;
+  color: #D50032;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 12px;
+}
+/* 1. Поисковик */
+
+
+.messages-search {
+  flex: 1;
+  position: relative;
+}
+
+/* сам <input> внутри LocalSearchBar */
+
+
+/* плейсхолдер */
+.messages-search input::placeholder {
+  color: #aaa;
+}
+
+/* иконка лупы */
+.messages-search .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  fill: #ccc;
+  pointer-events: none;
+}
+
+/* 2. Кнопка Add Friends */
+.messages-add-btn {
+  background: #d50032;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.messages-add-btn:hover {
+  background: #c10029;
+}
+
+/* 3. Активная таба */
+.chat-tab {
+  background-color: transparent;
+  border: 1px solid #d50032;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+  color: black;
+}
+
+.chat-tab.active {
+  background: #d50032;
+  color: #fff;
+}
+
+
+
+
+
+/* ====== Кнопка Add Friends ====== */
+.messages-add-btn {
+  background: #d50032;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.messages-add-btn:hover {
+  background: #c10029;
+}
+
+/* ====== Табы ====== */
+.chat-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 16px 16px;
+}
+.chat-tab {
+  background: #ffffff22;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.chat-tab.active {
+  background: #d50032;
+  color: #fff;
+}
+/* src/assets/css/MessagesList.css */
+
+/* ... ваш существующий CSS ... */
+
+/* Avatar wrapper */
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+/* Status dot */
+.friend-status {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #777;
+}
+.friend-status.online {
+  background: #26a65b;
+}
+.friend-status.offline {
+  background: #777;
+}
+/* WebKit */
+.messages-list::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+.messages-list::-webkit-scrollbar-track {
+  background: transparent;
+   height: 10px;
+}
+.messages-list::-webkit-scrollbar-thumb {
+  background-color: #D50032;
+  border-radius: 4px;
+   height: 10px;
+}
+.messages-list::-webkit-scrollbar-thumb:hover {
+  background-color: #C4002B;
+   height: 10px;
+}

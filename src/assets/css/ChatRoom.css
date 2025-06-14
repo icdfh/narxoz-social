@@ -1,0 +1,331 @@
+/* === Цвета и базовые переменные === */
+:root {
+  --accent:            #D50032;
+  --bg-page:           #F7F5F3;
+  --bg-panel:          #FFFFFF;
+  --divider:           #E0E0E0;
+  --text-primary:      #2E2E2E;
+  --text-secondary:    #777777;
+  --radius-container:  16px;
+  --radius-bubble:     8px;
+  --gap-xs:            4px;
+  --gap-sm:            8px;
+  --gap-md:            12px;
+}
+
+/* Сброс и фон */
+html, body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg-page);
+  overflow: hidden;
+  font-family: "Arial", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* Layout */
+.chat-page {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Sidebar */
+.chat-sidebar {
+  width: 100px;
+  background: var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px;
+  border-radius: 15px;
+  gap: var(--gap-md);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.sb-item {
+  width: 90px; height: 90px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  cursor: pointer; position: relative;
+  transition: background .2s, transform .1s;
+  border-radius: var(--radius-bubble);
+}
+.sb-item.active {
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.sb-item:hover { background: rgba(255,255,255,0.8); transform: translateY(-2px); }
+
+.sb-avatar {
+  width: 55px; height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.sb-nick {
+  display: none;
+  margin-top: 4px;
+  font-size: 15px; font-weight: bold;
+  color: var(--text-primary);
+  max-width: 60px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.sb-item.active .sb-nick { display: block; }
+
+.friend-status {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  position: absolute;
+  border: 2px solid var(--bg-panel);
+}
+.friend-status.online { background: #26a65b; }
+.friend-status.offline { background: #bbb; }
+
+/* Chat container */
+.chat-main {
+  flex: 0.9;
+  display: flex; flex-direction: column;
+  border: 2px solid var(--accent);
+  margin: var(--gap-md);
+  padding: 10px;
+  background-image: url("../images/chat-bg3.png");
+  border-radius: var(--radius-container);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow: hidden;
+}
+
+/* Header */
+.chat-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--divider);
+  margin: 10px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.hdr-left { display: flex; align-items: center; gap: var(--gap-sm); }
+/* Удалили старый ::after */
+.hdr-avatar { margin: 0; }
+
+/* Новый контейнер для аватара + статус */
+.hdr-avatar-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 8px;
+}
+.hdr-avatar {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+/* статус под аватаркой */
+.hdr-avatar-wrap .friend-status {
+  bottom: 7px;
+  right: 140px;
+  transform: translateX(-50%);
+}
+
+/* Данные собеседника */
+.hdr-details { display: flex; flex-direction: column; }
+.hdr-name { font-size: 16px; font-weight: 600; color: #000; }
+.hdr-status { font-size: 12px; color: var(--text-secondary); }
+
+/* Поиск */
+.hdr-right { display: flex; align-items: center; gap: var(--gap-sm); }
+.hdr-search-btn {
+ 
+  background: var(--bg-panel);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  border: none;
+}
+.hdr-search-input {
+  position: absolute;
+  top: 45px; left: 75%;
+  transform: translate(-50%,-50%) scale(0.8);
+  width: 0; opacity: 0; pointer-events: none;
+  transition: width .3s, opacity .3s, transform .3s;
+  background-color: white;
+  color: black;
+}
+.chat-header.search-open .hdr-search-input {
+  width: 200px; opacity: 1; transform: translate(-50%,-50%) scale(1);
+  pointer-events: auto;
+  background-color: white;
+  border: 1px solid #D50032;
+  padding: 8px;
+  border-radius: 8px;
+}
+.chat-header.search-open .hdr-search-btn { opacity: 0.4; }
+
+/* Сообщения */
+.chat-messages {
+  flex: 1; display: flex; flex-direction: column;
+  padding: var(--gap-sm);
+  overflow-y: auto;
+  background-image: url("../images/chat-bg3.png");
+  background-size: contain;
+  background-attachment: fixed;
+}
+
+/* Input */
+.chat-input-wrap {
+  display: flex; align-items: center;
+  padding: var(--gap-sm) var(--gap-md);
+  background: var(--bg-panel);
+  border-top: 1px solid var(--divider);
+  gap: var(--gap-sm);
+  border-radius: 15px;
+  margin: 15px;
+}
+.chat-input-wrap .msg-field {
+  flex: 1; border: none; outline: none;
+  background: transparent; font-size: 18px;
+  color: black;
+}
+.chat-input-wrap .send-btn {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border: none; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; cursor: pointer; transition: transform .1s;
+}
+.chat-input-wrap .send-btn:hover { transform: scale(1.1); }
+/* Стили для кнопки «Ещё» */
+.hdr-more-btn {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  filter: invert(80%);
+
+}
+.hdr-more-btn img{
+  width: 7px;
+}
+
+/* Всплывающее меню */
+.chat-header-menu {
+  position: absolute;
+  top: 100%;                 /* сразу под шапкой */
+  right: 16px;               /* выровнять по правому краю hdr-right */
+  background: var(--bg-panel);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-bubble);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  min-width: 180px;
+}
+
+/* Кнопки внутри меню */
+.chat-header-menu button {
+  background: transparent;
+  border: none;
+  padding: 10px 16px;
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chat-header-menu button:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Если меню слишком велико, появится скролл */
+.chat-header-menu {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+/* Скрыть поиск при открытом меню, если нужно */
+.chat-header .hdr-search-btn {
+  margin-left: 8px;
+}
+.chat-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 2000;
+}
+/* =================================================================== */
+/*  ≤ 768 px  —  «перекраиваем» TOPBAR                                  */
+/* =================================================================== */
+@media (max-width: 768px){
+
+  /* сам topbar превращаем в прилипший «хедер-чип» */
+  .topbar{
+    position: sticky;       /* остаётся сверху при скролле */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 800;           /* выше контента, но ниже модалок */
+    flex-direction: column;
+    gap: var(--space);
+    height: auto;
+    padding: 10px 14px;
+    border-radius: 0 0 12px 12px;
+    backdrop-filter: blur(6px);     /* лёгкое «стекло» */
+  }
+
+  /* поиск – на 100 % ширины и чуть меньше */
+  .search-wrapper      { order: 2; max-width: 100%; width: 100%; }
+  .search-input        { height: 42px; font-size: 0.95rem; }
+  .search-icon         { right: 20px; width: 22px; }
+
+  /* блок иконок теперь в одну строку с горизонт-скроллом            */
+  .topbar-icons{
+    order: 1;
+    width: 100%;
+    justify-content: flex-start;
+    gap: clamp(12px, 4vw, 24px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;   /* плавная прокрутка в iOS */
+    padding-bottom: 4px;                /* место для «теневой» скролл-индик. */
+  }
+  /* прячем сам скроллбар у WebKit */
+  .topbar-icons::-webkit-scrollbar{ display:none; }
+
+  /* иконка «Add user» – компактнее */
+  .add-user-btn{
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
+/* =================================================================== */
+/*  ≤ 480 px  —  ещё компактней                                         */
+/* =================================================================== */
+@media (max-width: 480px){
+
+  /* иконки распределяем «по краям» без прокрутки, если влазят */
+  .topbar-icons{
+    justify-content: space-between;
+    overflow-x: visible;
+  }
+
+  /* убираем фиксированную высоту у логотипа, если он в topbar */
+  .topbar .sidebar-logo{ display:none; }
+}
+

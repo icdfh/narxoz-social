@@ -1,0 +1,173 @@
+/* src/pages/CreatePost.css */
+
+/* Сама страница: центрируем контент горизонтально и вертикально */
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+  margin-top: 80px;
+  border-radius: 15px;
+}
+
+/* Карточка с формой */
+.create-card {
+  width: 100%;
+  max-width: 600px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid #D50032 ;
+
+}
+
+/* Заголовок */
+.create-title {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  color: #D50032;
+}
+
+/* Форма */
+.create-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Каждая группа полей */
+.form-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+/* Метка поля */
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: black;
+}
+
+/* Текстовое поле (textarea) */
+.form-field {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  transition: border-color 0.2s;
+  background-color: white;
+  color: black;
+}
+
+.form-field:focus {
+  outline: none;
+  border-color: #D50032;
+}
+
+/* Кнопка загрузки */
+.upload-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background-color: transparent;
+  border: 2px solid #D50032;
+  border-radius: 8px;
+  color: #D50032;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.upload-btn:hover {
+  background-color: #D50032;
+  color: white;
+}
+
+/* Скрываем реальный input[type=file], кликаем по метке */
+.file-input {
+  display: none;
+}
+
+/* Сетка превью картинок */
+.preview-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* Каждый элемент превью — квадрат */
+.preview-item {
+  position: relative;
+  width: calc(33.333% - 8px); /* три в ряд с учётом gap */
+  padding-top: 33.333%;        /* высота равна ширине */
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+}
+
+/* Картинка превью */
+.preview-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Кнопка удаления превью */
+.remove-btn {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 4px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s;
+}
+
+.remove-btn:hover {
+  opacity: 0.8;
+}
+
+/* Иконка удаления внутри кнопки */
+.remove-btn img {
+  width: 16px;
+  height: 16px;
+}
+
+/* Кнопка публикации */
+.publish-btn {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #D50032;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.publish-btn:hover:not(:disabled) {
+  background-color: #D50032;
+}
+
+.publish-btn:disabled {
+  background-color: #e0e0e0;
+  color: #888888;
+  cursor: not-allowed;
+}

@@ -1,0 +1,19 @@
+.complaints-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.complaints-table th,
+.complaints-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.complaints-table th {
+  background: #f7f7f7;
+  text-align: left;
+}
+.complaint-user-avatar{
+    width: 20px;
+}
+.complaint-user{
+    width: 20px;
+}

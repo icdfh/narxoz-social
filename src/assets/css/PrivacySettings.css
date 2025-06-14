@@ -1,0 +1,65 @@
+:root {
+  --privacy-bg:       var(--bg-panel);
+  --privacy-border:   var(--divider);
+  --privacy-radius:   var(--radius-container);
+  --privacy-gap:      var(--gap-md);
+}
+
+/* Контейнер */
+.privacy-policy-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--privacy-gap);
+  background: var(--bg-page);
+  overflow: hidden;
+  color: black;
+}
+
+/* Заголовок */
+.privacy-policy-title {
+  margin: 0 0 var(--privacy-gap) 0;
+  font-size: 1.5rem;
+  color: black;
+}
+
+/* Блок текста с прокруткой */
+.privacy-policy-text {
+  flex: 1;
+  background: var(--privacy-bg);
+  border: 1px solid var(--privacy-border);
+  border-radius: var(--privacy-radius);
+  padding: var(--privacy-gap);
+  overflow-y: auto;
+  line-height: 1.6;
+}
+
+/* Стили заголовков внутри текста */
+.privacy-policy-text h2 {
+  margin-top: var(--privacy-gap);
+  margin-bottom: calc(var(--privacy-gap) / 2);
+  font-size: 1.1rem;
+  color: black;
+}
+
+/* Списки */
+.privacy-policy-text ul {
+  padding-left: 1.2rem;
+  margin: calc(var(--privacy-gap) / 2) 0;
+  color: black;
+}
+
+/* Последний абзац */
+.privacy-policy-footer {
+  margin-top: var(--privacy-gap);
+  font-style: italic;
+  text-align: right;
+}
+.privacy-policy-status {
+  margin-top: var(--privacy-gap);
+  padding: var(--privacy-gap);
+  text-align: center;
+  font-weight: 600;
+  border-top: 1px solid var(--privacy-border);
+  background: var(--bg-panel);
+}

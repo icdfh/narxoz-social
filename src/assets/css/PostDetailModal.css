@@ -1,0 +1,85 @@
+/* ---------- backdrop ---------- */
+.pd-backdrop{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex; justify-content:center; align-items:center;
+  z-index:1200;
+}
+
+/* ---------- modal ---------- */
+.pd-modal{
+  width:880px;
+  max-width:95vw;
+  max-height:90vh;
+  background:#fff;
+  border-radius:12px;
+  display:flex;
+  overflow:hidden;
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  position:relative;
+}
+
+@media(max-width:768px){
+  .pd-modal{ flex-direction:column; width:96vw; }
+}
+
+/* CLOSE button */
+.pd-close{
+  position:absolute; top:10px; right:14px;
+  font-size:28px; line-height:28px;
+  background:none; border:none; cursor:pointer;
+  color:#d50032; font-weight:700;
+}
+
+/* ---------- LEFT ---------- */
+.pd-left{
+  flex:0 0 55%; background:#d50032; display:flex; align-items:center; justify-content:center;
+}
+@media(max-width:768px){ .pd-left{ flex:0 0 auto; } }
+
+.pd-img-wrap{ position:relative; width:100%; text-align:center; }
+.pd-img{ width:100%; height:auto; display:block; cursor:zoom-in; }
+.pd-text-only{ padding:40px 30px; font-size:18px; }
+
+/* arrows */
+.pd-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  font-size:48px; background:none; border:none; color:#fff;
+  text-shadow:0 0 4px #000; cursor:pointer; user-select:none;
+}
+.pd-arrow.left { left:12px; }
+.pd-arrow.right{ right:12px; }
+
+/* ---------- RIGHT ---------- */
+.pd-right{
+  flex:1 1 45%; padding:24px 26px; overflow-y:auto;
+  background-color: #d50032;
+}
+@media(max-width:768px){ .pd-right{ padding:20px 18px; } }
+
+/* автор */
+.pd-author{ display:flex; align-items:center; gap:14px; margin-bottom:18px; color: white;}
+.pd-author-avatar{
+  width:46px; height:46px; border-radius:50%; object-fit:cover;
+  border:2px solid white;
+}
+.pd-author-name{ font-weight:700; color:white; text-decoration:none; }
+.pd-author-name:hover{ text-decoration:underline; }
+.pd-date{ font-size:13px; color:#dbdbdb; }
+
+/* контент */
+.pd-desc{ font-size:22px; line-height:1.45; margin-bottom:20px; color: white; }
+
+/* лайки */
+.pd-like-row{ margin-bottom:22px; }
+
+/* CommentSection уже имеет собственную MUI-стилизацию,
+   но чуть «вжимаем» внутрь карточки */
+
+
+
+/* мелкая доработ-ка: прячем системный скролл в списке комментариев */
+.pd-right .MuiPaper-root::-webkit-scrollbar{ width:6px; }
+.pd-right .MuiPaper-root::-webkit-scrollbar-thumb{
+  background:#d50032; border-radius:3px;
+}

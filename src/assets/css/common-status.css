@@ -1,0 +1,22 @@
+/* src/assets/css/common-status.css */
+
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.friend-status {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #777;      /* оффлайн */
+  box-sizing: content-box;
+}
+
+.friend-status.online {
+  background: #26a65b;   /* онлайн */
+}

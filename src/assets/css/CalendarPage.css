@@ -1,0 +1,18 @@
+.fc {
+  font-family: sans-serif;
+}
+
+.fc .fc-toolbar-title {
+  color: #D50032;
+  font-size: 1.25rem;
+}
+
+.fc .fc-button {
+  background: transparent;
+  border: none;
+  color: #D50032;
+}
+
+.fc .fc-button:hover {
+  background: #fee2e2;
+}

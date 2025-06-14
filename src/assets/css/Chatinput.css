@@ -1,0 +1,26 @@
+.chat-input-wrap { display:flex; gap:6px; padding:6px 8px; border-top:1px solid #eee; }
+.clip-btn { font-size:20px; background:none; border:none; cursor:pointer; }
+.msg-field { flex:1; resize:none; border:1px solid #ccc; border-radius:6px; padding:6px 8px; }
+.send-btn { background:#1e90ff; color:#fff; border:none; border-radius:6px; padding:6px 14px; cursor:pointer; }
+.send-btn:disabled, .clip-btn:disabled { opacity:0.5; cursor:default; }
+.clip-btn {
+  background: transparent;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clip-icon {
+  width: 28px;
+  height: 28px;
+  /* Цвет через filter, если нужно изменить: */
+  filter: invert(28%) sepia(86%) saturate(5204%) hue-rotate(336deg) brightness(93%) contrast(101%);
+}
+
+.clip-btn:disabled .clip-icon {
+  opacity: 0.5;
+  cursor: default;
+}

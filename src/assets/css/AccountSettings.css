@@ -1,0 +1,40 @@
+/* ---------- wrapper ---------- */
+.account-settings {
+  max-width: 640px;
+  margin: 0 auto;
+  background:#fff;
+  border-radius:16px;
+  padding:32px 28px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+  font-family: system-ui, sans-serif;
+}
+
+.account-center { display:flex; justify-content:center; padding:60px 0; }
+
+.acc-title { color:#d50032; margin-bottom:24px; font-weight:700; }
+
+/* ---------- form ---------- */
+.acc-form { display:flex; flex-direction:column; gap:22px; }
+
+/* поля только для чтения чуть бледнее */
+.MuiInputBase-root input[readonly] { color:#777; }
+
+/* ---------- avatar ---------- */
+.acc-avatar-row {
+  display:flex; align-items:center; gap:20px;
+}
+
+.acc-upload-btn {
+  border-color:#d50032 !important;
+  color:#d50032 !important;
+}
+
+.acc-upload-btn:hover { background:#ffe6eb; border-color:#d50032; }
+
+/* ---------- save btn ---------- */
+.acc-save-btn {
+  background:#d50032 !important;
+  font-weight:600;
+}
+.acc-save-btn:hover { background:#b40029 !important; }
+.acc-save-btn[disabled] { opacity:.6; }

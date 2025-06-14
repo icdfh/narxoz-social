@@ -1,0 +1,174 @@
+/* ───────── каркас ───────── */
+.wrapper {
+  display: flex;
+  gap: 32px;
+  padding: 1.5rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* левая колонка */
+.side {
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 0.2rem;
+}
+.month,
+.monthActive {
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  color: #9e9e9e;
+}
+.monthActive {
+  color: #000;
+  font-weight: 600;
+}
+
+/* правая колонка */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.title span {
+  color: #c81d3b;
+  font-weight: 600;
+}
+
+/* rbc кастомизация */
+.rbc-month-view {
+  border-top: 1px solid #d9d9d9;
+}
+.rbc-month-row + .rbc-month-row {
+  border-top: 1px solid #ececec;
+}
+.rbc-header {
+  padding: 4px 0;
+  font-size: 0.8rem;
+  
+}
+.rbc-date-cell {
+  padding: 2px;
+  text-align: right;
+}
+/* скрываем дефолтное отображение полосок-событий */
+.hideDefault {
+  display: none;
+}
+
+/* точки */
+.dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 4px 0 0;
+}
+
+.legend {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.legend .dot {
+  margin-right: 8px;
+}
+.createBtn {
+  align-self: flex-end;
+  margin-bottom: 6px;
+  background: #c81d3b;
+  color: #fff;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+
+}
+:global(.rbc-calendar),
+:global(.rbc-calendar *) {
+  color: #000 !important;              /* всё чёрное */
+}
+
+/* ───────── сегодняшняя дата ──────── */
+:global(.rbc-today) {
+  background: #fffdf5;
+}
+
+/* ───────── текст ивентов (любые виды) ───────── */
+:global(.rbc-event),
+:global(.rbc-day-slot .rbc-event-content),
+:global(.rbc-time-slot .rbc-event-content),
+:global(.rbc-agenda-event-cell) {
+  color: #000 !important;              /* подписи в Month / Week / Day / Agenda */
+}
+
+/* если в других режимах нужен прозрачный фон у событий: */
+:global(.rbc-event) {
+  background-color: transparent !important;
+  border: none !important;
+}
+:global(.rbc-event),
+:global(.rbc-event-content),
+:global(.rbc-overlay .rbc-event-content) {
+  color: #000 !important;           /* чёрный текст везде */
+}
+
+/* (необязательно) если вы сделали фон событий прозрачным: */
+:global(.rbc-event) {
+  background-color: transparent !important;
+  border: none !important;
+}
+/* точка-маркер */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* контейнер one-line события в Month-view */
+.monthItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* текст события (чёрный) */
+.titleTxt {
+  color: #000;
+  font-size: 0.78rem;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.btnRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.subsBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.subsBtn img { width: 22px; height: 22px; }
+
+.btnRow { display:flex; justify-content:flex-end; gap:8px; margin-bottom:6px; }
+.iconBtn { background:none; border:none; cursor:pointer; padding:4px; }
+.iconBtn img { width:22px; height:22px; }

@@ -1,0 +1,64 @@
+/* src/assets/css/SettingsLayout.css */
+
+.settings-container {
+  display: flex;
+  height: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+/* Левая панель */
+.settings-sidebar {
+  width: 200px;
+  border-right: 1px solid #eee;
+  padding: 24px;
+}
+
+.settings-sidebar h3 {
+  color: #db0f0f;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+
+.settings-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.settings-menu li {
+  margin-bottom: 12px;
+}
+
+.settings-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  padding: 4px 8px;
+  width: 100%;
+}
+
+.settings-link.active {
+  color: #db0f0f;
+  font-weight: 600;
+}
+
+/* Бейдж рядом с «Notifications» */
+.settings-badge {
+  display: inline-block;
+  background: #db0f0f;
+  color: #fff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 8px;
+  margin-left: 8px;
+  line-height: 1;
+}
+
+/* Контент справа */
+.settings-content {
+  flex: 1;
+  padding: 24px;
+  background: #fafafa;
+}

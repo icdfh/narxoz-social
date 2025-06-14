@@ -1,0 +1,48 @@
+/* ===== CSS-переменные и общий reset ======================================= */
+:root{
+  /* COLOR SYSTEM ---------------------------------------------------------- */
+  --accent:        #d50032;
+  --accent-dim:    #b40029;
+  --bg:            #ffffff;
+  --fg:            #222222;
+  --border:        #e0e0e0;
+
+  /* TYPO & RADII ---------------------------------------------------------- */
+  --radius-sm:     6px;
+  --radius-md:     12px;
+  --radius-lg:     20px;
+
+  /* BREAKPOINTS (MOBILE FIRST) ------------------------------------------- */
+  --bp-sm: 480px;     /* телефоны в альбомной */
+  --bp-md: 768px;     /* планшеты */
+  --bp-lg:1024px;     /* десктоп */
+}
+
+/* Сбросы (можно взять любую готовую reset-библиотеку) ---------------------- */
+*,
+*::before,
+*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+img,svg{ display:block; max-width:100%; height:auto; }
+
+/* БАЗА UI ------------------------------------------------------------------ */
+body{
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color:       var(--fg);
+  min-height:  100vh;
+}
+
+/* Ссылки и кнопки в одном стиле */
+a{ color:var(--accent); text-decoration:none; }
+button,
+.accent{
+  background: var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:background .2s;
+}
+button:hover,
+.accent:hover{ background:var(--accent-dim); }

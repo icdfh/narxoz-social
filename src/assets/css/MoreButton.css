@@ -1,0 +1,44 @@
+/* src/assets/css/MoreButton.css */
+
+.more-btn-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.more-btn-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: transparent !important;
+  background-color: transparent !important;
+}
+
+.more-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--bg-panel);
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-bubble);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  padding: var(--gap-xs) 0;
+  z-index: 1000;
+}
+
+.more-menu button {
+  background: transparent;
+  border: none;
+  padding: var(--gap-sm) var(--gap-md);
+  text-align: left;
+  width: 100%;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.more-menu button:hover {
+  background: var(--bg-page);
+}

@@ -1,0 +1,26 @@
+.backdrop { 
+    position:fixed;
+     inset:0; 
+     background:rgba(0,0,0,.35); 
+     z-index:60; 
+     color: black;
+    }
+.modal {
+   width: 380px;
+   margin:120px auto; 
+   background:#fff; 
+   padding:20px 24px;
+   border-radius:6px;
+   display:flex; 
+   flex-direction:column; gap:12px;
+   color: #D50032;
+}
+input, textarea 
+{
+     width:100%; 
+    padding:6px 8px; 
+}
+.btnRow { 
+    display:flex; 
+    justify-content:flex-end; gap:8px;
+ }

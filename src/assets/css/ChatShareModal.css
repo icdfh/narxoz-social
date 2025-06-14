@@ -1,0 +1,30 @@
+.chat-share-modal {
+  padding: 20px;
+}
+.chat-share-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+.chat-share-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.chat-share-item:hover {
+  background: #f5f5f5;
+}
+.chat-share-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
+}
+.chat-share-nickname {
+  font-weight: 500;
+}

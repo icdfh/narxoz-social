@@ -1,0 +1,454 @@
+/* src/assets/css/AnotherUserProfile.css */
+
+.another-profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.another-profile-wrapper__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #ececec;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.another-profile-wrapper__user-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.another-profile-wrapper__avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d50032;
+  position: relative;
+}
+
+.status-indicator {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.status-indicator.online {
+  background-color: #44dd88;
+}
+
+.status-indicator.offline {
+  background-color: #bbb;
+}
+
+.avatar-wrap {
+  position: relative;
+}
+
+.another-profile-wrapper__text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.another-profile-wrapper__full-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #d50032;
+}
+
+.another-profile-wrapper__nickname {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+.another-profile-wrapper__login {
+  font-size: 16px;
+  color: #777;
+}
+
+.another-profile-wrapper__status-bar {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.another-profile-wrapper__controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btns {
+  display: flex;
+  gap: 15px;
+}
+.btns img {
+  width: 28px;
+  height: 28px;
+}
+
+.another-profile-wrapper__btn-chat
+ {
+  width: 36px;
+  height: 36px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+ 
+}
+.another-profile-wrapper__btn-more{
+   width: 30px;
+  height: 30px;
+  padding: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  filter: invert(80%);
+}
+
+
+
+.another-profile-wrapper__btn-add,
+.another-profile-wrapper__btn-remove {
+  background: #d50032;
+  color: #fff;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.another-profile-wrapper__btn-add:hover,
+.another-profile-wrapper__btn-remove:hover {
+  opacity: 0.85;
+}
+
+.another-profile-wrapper__error {
+  background: #ffe6e6;
+  color: #d50032;
+  padding: 10px 20px;
+  margin: 10px 30px;
+  border-radius: 6px;
+}
+
+.another-profile-wrapper__content {
+  display: flex;
+  flex: 1;
+  background: #f5f5f5;
+  gap: 20px;
+  padding: 20px 30px;
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Левая колонка */
+.another-profile-wrapper__left-col-outer {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.another-profile-wrapper__left-col-outer::-webkit-scrollbar {
+  display: none;
+}
+
+.another-profile-wrapper__left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.another-profile-wrapper__post-card {
+  background: #d50032;
+  color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.another-profile-wrapper__post-inner-header {
+  background: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.another-profile-wrapper__post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.img-avatar {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.another-profile-wrapper__post-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d50032;
+}
+
+.another-profile-wrapper__post-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.another-profile-wrapper__post-author {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  text-decoration: none;
+}
+
+.another-profile-wrapper__post-author:hover {
+  text-decoration: underline;
+}
+
+.another-profile-wrapper__post-time {
+  font-size: 13px;
+  color: #555;
+}
+
+.another-profile-wrapper__post-more {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.another-profile-wrapper__post-images.single {
+  width: 100%;
+}
+.another-profile-wrapper__post-images.single .another-profile-wrapper__post-img {
+  width: 100%;
+  display: block;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  object-fit: cover;
+}
+
+.another-profile-wrapper__post-images.multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.another-profile-wrapper__post-images.multi .another-profile-wrapper__post-img {
+  width: calc(50% - 2px);
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.another-profile-wrapper__post-content {
+  padding: 12px 16px;
+}
+.another-profile-wrapper__post-content p {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.another-profile-wrapper__post-footer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 12px 16px 16px;
+}
+
+
+.another-profile-wrapper__right-col {
+  width: 300px;
+  height: calc(100vh - 160px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.another-profile-wrapper__friends-card,
+.another-profile-wrapper__orgs-card {
+  background: #d50032;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.another-profile-wrapper__friends-title,
+.another-profile-wrapper__orgs-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.another-profile-wrapper__friends-list,
+.another-profile-wrapper__orgs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.another-profile-wrapper__friend-link,
+.another-profile-wrapper__org-link {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  position: relative;
+}
+
+.another-profile-wrapper__friend-avatar,
+.another-profile-wrapper__org-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.another-profile-wrapper__friend-avatar:hover,
+.another-profile-wrapper__org-avatar:hover {
+  transform: scale(1.05);
+}
+
+.another-profile-wrapper__no-friends,
+.another-profile-wrapper__no-orgs {
+  font-size: 14px;
+  color: #ffeaea;
+}
+.profile-menu-backdrop{
+  position:fixed; inset:0; background:#0006; backdrop-filter:blur(2px);
+  display:flex; align-items:center; justify-content:center; z-index:2000;
+  
+}
+.profile-menu{
+  background:#fff; padding:20px 24px; border-radius:12px; min-width:220px;
+  display:flex; flex-direction:column; gap:12px; color: #d50032; font-weight: 500;
+}
+ 
+.profile-menu button{
+  background:#f5f5f5; border:none; border-radius:8px;
+  padding:10px 16px; cursor:pointer; font-size:14px; color: #d50032;
+}
+.profile-menu button:hover{ background:#eee; }
+/* ─────────  КРАСИВЫЕ КОММЕНТЫ ПОД ПОСТОМ  ───────── */
+
+/* контейнер со списком */
+.another-profile-wrapper__comment-list{
+  background:#fff;
+  border-radius:8px;
+  margin: 0 16px 12px;
+  padding:10px 12px;
+  max-height: 260px;               /* скролл, если много */
+  overflow-y:auto;
+
+  box-shadow:0 2px 6px #0001;
+}
+
+/* отдельный комментарий */
+.another-profile-wrapper__comment-item{
+  background:#f7f7f7;
+  border-radius:6px;
+  padding:8px 10px;
+  font-size:14px;
+  line-height:1.35;
+  color:#222;
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  transition:background .15s;
+}
+.another-profile-wrapper__comment-item:not(:last-child){
+  margin-bottom:6px;
+}
+.another-profile-wrapper__comment-item:hover{
+  background:#eee;
+}
+
+/* иконка-кнопка delete (которая появлялась у своих сообщений) */
+.another-profile-wrapper__comment-delete-icon{
+  width:16px;
+  height:16px;
+  cursor:pointer;
+  opacity:.55;
+ filter: invert(100%);
+}
+.another-profile-wrapper__comment-delete-icon:hover{ opacity:.9 }
+
+/* форма добавления нового комментария */
+.comment-form{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin: 0 16px 16px;
+}
+.another-profile-wrapper__comment-block{
+  display: flex;
+}
+.another-profile-wrapper__comment-count{
+  position: relative;
+  left: 5px;
+  
+}
+.another-profile-wrapper__comment-icon{
+  position: relative;
+  top: 1px;
+  width: 18px;
+ 
+}
+
+.comment-input{
+  flex:1;
+  background:#fff;
+  border:1px solid #ddd;
+  border-radius:6px;
+  padding:8px 12px;
+  font-size:14px;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.comment-input:focus{
+  border-color:#d50032;
+  box-shadow:0 0 0 2px #d5003233;
+}
+.comment-submit{
+  background:#d50032;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  padding:8px 14px;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  transition:opacity .2s, transform .1s;
+}
+.comment-submit:hover{ opacity:.9 }
+.comment-submit:active{ transform:scale(.97) }

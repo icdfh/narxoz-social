@@ -1,0 +1,118 @@
+/* src/components/groups/AddUserModal.css */
+
+.aum-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.aum-modal {
+  background: #fff;
+  width: 90%; max-width: 400px;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.aum-title {
+  margin: 0 0 12px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.aum-search {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.aum-error {
+  color: #c00;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.aum-loading,
+.aum-empty {
+  text-align: center;
+  color: #666;
+  padding: 12px 0;
+}
+
+.aum-list {
+  list-style: none;
+  margin: 0; padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.aum-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.aum-info {
+  display: flex;
+  align-items: center;
+}
+
+.aum-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.aum-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.aum-name {
+  font-weight: 500;
+}
+
+.aum-nick {
+  font-size: 0.85em;
+  color: #888;
+}
+
+.aum-add-btn {
+  background: #28a745;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.aum-add-btn:hover {
+  background: #218838;
+}
+
+.aum-actions {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.aum-close-btn {
+  background: #ccc;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.aum-close-btn:hover {
+  background: #bbb;
+}

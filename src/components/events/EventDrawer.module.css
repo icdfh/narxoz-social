@@ -1,0 +1,63 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  color: black !important;
+}
+
+.drawer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 320px;
+  height: 100%;
+  background: #fff;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+
+}
+
+.closeBtn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.subBtn {
+  position: relative;
+  top: 600px;
+  background: #c81d3b;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.unsubBtn {
+  
+  background: #ddd;
+  color: #333;
+}
+
+.note {
+  margin-top: auto;
+  font-style: italic;
+  color: #777;
+}
+
+.desc {
+  white-space: pre-line;
+  margin: 8px 0 16px;
+}
+.edControls { display:flex; gap:8px; margin-top:12px; }
+.edControls button { padding:4px 10px; cursor:pointer; }
+.delBtn { background:#ddd; }
+

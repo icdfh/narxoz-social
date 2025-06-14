@@ -1,0 +1,40 @@
+.pp-backdrop { 
+    position:fixed; 
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:120; 
+    color: black;
+    }
+.pp-modal   
+ { 
+width:520px;
+max-height:90vh;
+margin:4vh auto; 
+background:#fff;
+border-radius:10px; 
+padding:24px 28px;
+display:flex; 
+flex-direction:column;
+color: black;
+        
+}
+.pp-scroll   
+{
+     flex:1 1 auto; 
+    overflow-y:auto; 
+    margin:16px 0; 
+    border:1px solid #eee; 
+    padding:12px; 
+    color: black;
+}
+.pp-accept   
+{
+align-self:center;
+padding:8px 20px; 
+background:#c81d3b;
+color:#fff;
+border:none; 
+border-radius:6px; 
+cursor:pointer; 
+
+}

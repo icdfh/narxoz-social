@@ -1,0 +1,12 @@
+/* Небольшие флэксовые pres-классы, чтобы не плодить > 1 строчки в JSX */
+
+.flex         { display:flex; }
+.f-center     { display:flex; justify-content:center; align-items:center; }
+.f-between    { display:flex; justify-content:space-between; }
+.gap-4        { gap:4px 4px; }
+.gap-8        { gap:8px 8px; }
+.hide-sm      { display:block; }
+@media(max-width:var(--bp-sm)){ .hide-sm{ display:none !important; } }
+
+.w-full      { width:100%; }
+.text-ellipsis{ overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }

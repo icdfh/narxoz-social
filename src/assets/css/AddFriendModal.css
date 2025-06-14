@@ -1,0 +1,97 @@
+/* src/assets/css/AddFriendModal.css */
+
+.afm-box {
+  position: relative;
+  display: inline-block;
+}
+
+.afm-modal {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  width: 320px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.afm-input {
+  width: 100%;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  box-sizing: border-box;
+}
+
+.afm-loading {
+  padding: 6px 10px;
+  text-align: center;
+  color: #777;
+}
+
+.afm-results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 220px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.afm-empty {
+  padding: 6px 10px;
+  color: #777;
+  text-align: center;
+}
+
+.afm-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 4px;
+  border-bottom: 1px solid #eee;
+}
+
+.afm-item:last-child {
+  border-bottom: none;
+}
+
+.afm-label {
+  flex: 1;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+}
+
+.afm-add-btn-usr {
+  background: #d50032;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.2s;
+}
+
+.afm-add-btn-usr:hover {
+  background: #c10029;
+}
+
+.afm-status {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 4px 8px;
+  background: #44dd88;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}

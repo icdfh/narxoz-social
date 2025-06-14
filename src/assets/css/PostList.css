@@ -1,0 +1,323 @@
+/* Обёртка всего списка постов */
+.post-list {
+ display: flex;
+  flex-direction: column;
+  width: 90%;            /* ширина контейнера — 90% от родителя */
+  max-width: 1200px;      /* можно задать макс. ширину по макету */
+  margin: 20px auto 0;    /* 20px сверху, авто-центрирование по горизонтали */
+  gap: 40px;              /* отступы между постами */
+  align-items: stretch;    /* отступ вокруг всего списка */
+  height: 100%;
+}
+.post-item {
+   width: 100%;           /* чтобы каждый пост был на всю ширину */
+  box-sizing: border-box;
+}
+/* ───── Карточка ───── */
+.post-card {
+  background: #D50032;            /* насыщенный красный фон */
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  color: #fff;                    /* По умолчанию текст белый для контраста */
+  display: flex;
+  flex-direction: column;
+  width: auto;  /* или width: 100% */
+  margin: 0;
+}
+
+/* ───── Секция "Верх карточки" (аватар + имя + кнопка "еще") ───── */
+.post-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;    /* расстояние от этого блока до красного контента */
+}
+
+/* Левый блок с аватаром и инфо об авторе */
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Аватар автора */
+.post-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;   /* тонкая белая обводка для контраста */
+}
+
+/* Блок с именем и временем */
+.post-user-info {
+  display: flex;
+  flex-direction: column;
+  color: #000;              /* имя/время — тёмный цвет, чтобы контрастировать с белым фоном над карточкой */
+}
+
+/* Ссылка на профиль автора */
+.post-author {
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  color: #000;             /* чёрный текст над белым фоном */
+}
+
+.post-time {
+  font-size: 13px;
+  color: #555;
+}
+
+/* Кнопка "троеточие" */
+.post-more-btn {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+/* ───── Красный контент внутри карточки ───── */
+.post-content {
+  margin-bottom: 12px;
+}
+
+/* Стили для заголовка H4 (белый текст поверх красного прямоугольника) */
+.post-content h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.3;
+}
+
+/* ───── Изображения ───── */
+
+/* Одиночное изображение занимает всю ширину */
+.post-images.single img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Сетка 2 колонки для нескольких изображений */
+.post-images.multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;   /* промежуток между картинками */
+}
+
+.post-images.multi img {
+  width: calc(50% - 4px);  /* 2 колонки с учётом gap 8px */
+  border-radius: 10px;
+  object-fit: cover;
+  height: 200px;           /* одинаковая высота для всех */
+}
+
+/* ───── Секция "лайк–комментарий" ───── */
+.like-comment-row {
+  display: flex;
+  gap: 24px;     /* расстояние между лайком и комментарием */
+  align-items: center;
+  margin-top: 12px;
+}
+
+.comment-section {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  
+}
+
+
+.comment-header {
+  margin-bottom: 8px;
+}
+.comment-input{
+  background-color: white;
+  border: none;
+  width: 90%;
+  border-radius: 6px;
+  padding: 8px 12px;
+  color: black;
+}
+
+.comment-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.comment-list {
+  max-height: 200px; /* если комментариев много, появится скролл */
+  overflow-y: auto;
+}
+
+.comment-list::-webkit-scrollbar {
+  width: 6px;
+}
+.comment-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.comment-list::-webkit-scrollbar-thumb {
+  background-color: #ffffff55;
+  border-radius: 3px;
+}
+
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 8px;
+  width: 1000px;
+  margin-top: 30px;
+}
+.post-comments{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.comment-text {
+  color: white;
+  font-size: 14px;
+  word-break: break-word;
+  flex: 1;
+}
+
+.comment-delete-icon {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-left: 12px;
+}
+.comment-delete-icon:hover {
+  opacity: 1;
+}
+
+.no-comments-modern {
+  color: #dddddd;
+  font-size: 14px;
+  text-align: center;
+  padding: 12px 0;
+  
+}
+.no-comments{
+  margin: 10px;
+}
+
+.comment-form-modern {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  
+}
+.comment-form{
+  display: flex;
+  gap: 20px;
+}
+
+.comment-input-modern {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #cccccc;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #333333;
+  
+}
+
+.comment-input-modern:focus {
+  outline: none;
+  border-color: #D50032;
+}
+.comment-submit{
+  background-color: #D50032;
+  color: white ;
+  border: 1px white solid;
+}
+.comment-submit:hover{
+  background-color: white;
+  color: #D50032;
+  border: 1px white solid;
+}
+
+.comment-submit-modern {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  color: #D50032;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-submit-modern:hover {
+  background-color: #f0f0f0;
+}
+
+.comment-icon-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;        /* Отступ между иконкой и цифрой */
+  cursor: pointer;
+}
+
+.comment-count {
+  color: #fff;     /* Белый цвет для числа комментариев */
+  font-size: 14px;
+}
+
+/* Если нужно скорректировать отступ у кнопки лайка: */
+.like-button-count {
+  color: #fff;     /* Белый цвет для числа лайков */
+  font-size: 14px;
+  margin-left: 6px; /* Отступ между иконкой лайка и цифрой */
+}
+
+
+
+
+.post-list-wrapper {
+  /* высота задаётся inline-стилем или же здесь */
+  /* height: calc(100vh - 64px); */
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;        /* центрируем по горизонтали */
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+/* Стилизация скролла именно у контейнера с классом .post-list-wrapper */
+/* WebKit-браузеры */
+.post-list-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.post-list-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.post-list-wrapper::-webkit-scrollbar-thumb {
+  background-color: #D50032;
+  border-radius: 4px;
+  border: none;
+}
+
+.post-list-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #C4002B;
+}
+
+/* Firefox */
+.post-list-wrapper {
+  scrollbar-width: thin;
+  scrollbar-color: #D50032 transparent;
+}

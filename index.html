@@ -1,0 +1,24 @@
+<!-- public/index.html  (или vite.config root) -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- уже были -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+  <!-- ваши базовые стили -->
+  <link rel="stylesheet" href="/assets/css/_root.css"     />
+  <link rel="stylesheet" href="/assets/css/_helpers.css"  />
+
+  <!-- ⬇️ добавляем адаптивный пласт ПОСЛЕДНИМ -->
+  <link rel="stylesheet" href="/assets/css/_responsive.css" />
+
+  <title>Narxoz Social</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+</html>

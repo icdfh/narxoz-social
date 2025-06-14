@@ -1,0 +1,251 @@
+/* ========================================================================
+   1.  FLUID TYPO + ОТСТУПЫ  (читаемо и на 320 px, и на 4 К)
+   ===================================================================== */
+
+/* Шаг-размера шрифта:   14-18-22 px                  
+   clamp( min, preferred, max ) */
+html        { font-size: clamp(14px, 0.9vw + 0.5rem, 18px); }
+
+/* Универсальный вертикальный gap */
+:root{
+  --space: clamp(12px, 1.6vw, 24px);     /* 12-24 px */
+}
+
+/* Пример применения: */
+section     { margin-bottom: var(--space); }
+.gap        { gap: var(--space); }        /* util-class */
+
+/* ========================================================================
+   2.  BREAKPOINTS «НА ВСЁ» (mobile-first)
+   ===================================================================== */
+
+/* —————————————————  ≤ 768px  ————————————————— */
+@media (max-width: 768px){
+
+  /* Sidebar превращаем в нижнюю навигацию-«пллинтус» */
+  .sidebar{
+    position: fixed; inset: auto 0 0 0;
+    height: 60px; width: 100vw;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 0 12px;
+    border-radius: 0;         /* убираем скругления */
+    z-index: 999;
+  }
+  .sidebar-logo     { display:none; }
+  .icon-wrapper     { margin-top: 0; }
+
+  /* смещаем основной контент выше, чтобы не наехало */
+  .main-content,
+  .page-content     { margin-bottom: 65px; } 
+
+  /* User-panel растягиваем на всю ширину и поднимаем вверх */
+  .user-panel{
+    width: 100%;
+    order: -1;                    /* первым в колонке */
+    margin-bottom: var(--space);
+  }
+
+  /* Карточки постов — убираем красный margin-gap и радиусы */
+  .post-card{
+    border-radius: 0;
+    padding: 16px 12px;
+  }
+  .post-images.multi img{
+    width: 100%;                  /* 1 колонка вместо 2 */
+  }
+
+  /* Модальные окна по ширине экрана */
+  .pd-modal,
+  .pp-modal,
+  .report-modal     { width: 96vw; height: auto; max-height: 92vh; }
+}
+
+/* —————————————————  ≤ 480px  ————————————————— */
+@media (max-width: 480px){
+
+  /* Ужимаем topbar */
+  .topbar{
+    flex-direction: column;
+    height: auto;
+    padding: 12px 16px;
+    gap: var(--space);
+  }
+  .search-wrapper   { max-width: 100%; }
+  .search-input     { font-size: 0.95rem; }
+
+  /* Авторы / аватары в постах */
+  .post-avatar      { width: 38px; height: 38px; }
+  .post-author      { font-size: 0.95rem; }
+  .post-time        { font-size: 0.75rem; }
+
+  /* Таблицы (complaints) — горизонтальный скролл */
+  .complaints-table{
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border: none;
+  }
+  .complaints-table thead{ display:none; }
+  .complaints-table td{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 4px;
+    min-width: 160px;
+    border: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+/* ========================================================================
+   3.  GRID «сам рассчитай колонки»
+   ===================================================================== */
+
+/* Галереи / списки карточек */
+.auto-grid{
+  --min: 140px;                      /* минимальная ширина ячейки */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--min), 1fr));
+  gap: var(--space);
+}
+
+/* применяете:
+   <ul class="friends-list auto-grid"> … </ul>
+   <div class="pd-image-grid auto-grid" style="--min:100px"> … </div>
+*/
+
+/* ========================================================================
+   4.  Резиновая высота модальных «комментарии», «share» и т. п.
+   ===================================================================== */
+
+.share-list,
+.pd-comment-list,
+.pp-scroll{
+  max-height: calc( 70vh - 120px );  /* всегда помещается на экране */
+}
+
+/* ========================================================================
+   5.  Быстрые util-классы (если ещё нет)
+   ===================================================================== */
+
+.text-center { text-align:center!important; }
+.d-none      { display:none!important; }
+.w-100       { width:100%!important; }
+.mx-auto     { margin-left:auto!important; margin-right:auto!important; }
+@media (max-width: 768px){
+
+  /* ---------- MESSAGES LIST / Чаты ---------------------------------- */
+  .messages-header{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space);
+  }
+  .messages-header-right{
+    width: 100%;
+    justify-content: space-between;
+  }
+  .messages-search-input{
+    width: 100%;
+    padding-left: 38px;               /* иконка внутри */
+  }
+  .messages-search-icon{ left: 12px; }
+
+  /* список чатов растягиваем на весь экран под шапкой                */
+  .messages-page{
+    padding: var(--space);
+    height: calc(100vh - 60px - var(--space)*2);  /* учёт плинтуса */
+  }
+  .messages-list{ height: 100%; }
+
+  /* ---------- ВНУТРИ ЧАТА (DirectChat / GroupChat) ------------------ */
+  .chat-page{ flex-direction: column; }
+  .chat-sidebar{
+    flex-direction: row;
+    width: 100%;
+    height: 64px;
+    gap: clamp(4px, 3vw, 10px);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .chat-sidebar .sb-item{
+    width: 68px; height: 64px;
+    flex-direction: column;
+  }
+  .chat-main{ flex: 1 1 auto; }
+
+  /* ---------- SETTINGS / ACCOUNT FORMS ------------------------------ */
+  .settings-container{ flex-direction: column; }
+  .settings-sidebar{
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+  }
+  .settings-menu{
+    display: flex;
+    gap: 16px;
+  }
+  .settings-content{ padding: var(--space) 0; }
+
+  /* формы «аккаунт», «complaint-detail» и т.д. */
+  .acc-form,
+  .report-modal,
+  .complaint-detail-container{
+    padding: var(--space) calc(var(--space) - 4px);
+  }
+
+  /* ---------- FRIENDS / ORGS --------------------------------------- */
+  .friends-header{
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space);
+  }
+  .friend-card{ flex-wrap: wrap; padding: 10px 12px; }
+  .friend-right{ margin-left: auto; }
+
+  /* ---------- Модалки общего назначения ----------------------------- */
+  .modal-box{
+    max-width: 94vw;
+    padding: var(--space);
+  }
+  .gc-users-list,
+  .friends-list.modal{
+    max-height: calc(65vh - 140px);
+  }
+}
+
+/* =================================================================== */
+/*  ≤ 480 px  —  «узкий» телефон                                        */
+/* =================================================================== */
+@media (max-width: 480px){
+
+  /* ---------- Messages tabs & badges -------------------------------- */
+  .messages-tab{ font-size: 0.8rem; padding: 4px 8px; }
+  .chat-badge{ top: 4px; right: 6px; }
+
+  /* ---------- Инлайновая таблица complaints / notifications --------- */
+  .complaints-table,
+  .notifications-list{
+    font-size: 0.85rem;
+  }
+  .notification-item{ padding: 10px 14px; }
+
+  /* ---------- Пост-карточки ещё компактнее -------------------------- */
+  .post-card{ padding: 12px 10px; }
+  .post-content h4{ font-size: 1rem; }
+  .comment-item{ font-size: 0.8rem; }
+
+  /* ---------- Кнопка лайк/коммент рядом, если узко ------------------ */
+  .like-comment-row{ gap: 14px; }
+}
+
+/* =================================================================== */
+/*  UTIL  –  быстро из колонок → строку (flex-wrap)                     */
+/* =================================================================== */
+.row-on-mobile{
+  /* <div class="myBlock row-on-mobile">  */
+}
+@media(max-width:768px){
+  .row-on-mobile{ flex-direction: row!important; flex-wrap: wrap; }
+}
