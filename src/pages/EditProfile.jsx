@@ -1,5 +1,10 @@
+/*  src/pages/EditProfile.jsx
+    --------------------------------------------------------------
+    ▸ страница редактирования профиля (nickname + аватар)
+    ▸ никаких «жёстких» URL — используется baseURL из apiClient
+    -------------------------------------------------------------- */
+
 import React, { useEffect, useState } from "react";
-import apiClient from "../utils/apiClient";
 import {
   Container,
   TextField,
@@ -10,72 +15,81 @@ import {
   Box,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import apiClient from "../utils/apiClient";
 
-const EditProfile = () => {
-  const [form, setForm] = useState({
-    full_name: "",
-    nickname: "",
-    email: "",
-  });
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(true);
+/* базовый адрес бэка = axios.baseURL без trailing /api/ */
+const BACKEND_URL = apiClient.defaults.baseURL.replace(/\/api\/?$/, "");
+
+export default function EditProfile() {
   const navigate = useNavigate();
 
+  const [form, setForm] = useState({
+    full_name: "",
+    nickname : "",
+    email    : "",
+  });
+
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [preview,    setPreview]    = useState(null);
+  const [loading,    setLoading]    = useState(true);
+
+  /* ───── загрузка текущего пользователя ───── */
   useEffect(() => {
     apiClient
       .get("/users/profile/")
-      .then((res) => {
+      .then(({ data }) => {
         setForm({
-          full_name: res.data.full_name || "",
-          nickname: res.data.nickname || "",
-          email: res.data.email || "",
+          full_name: data.full_name || "",
+          nickname : data.nickname  || "",
+          email    : data.email     || "",
         });
-        if (res.data.avatar_path) {
-          setPreview(`http://127.0.0.1:8000${res.data.avatar_path}`);
+
+        /* превью существующего аватара */
+        if (data.avatar_path || data.avatar_url) {
+          const raw   = data.avatar_path || data.avatar_url;  // "/media/avatars/ava.jpg"
+          const clean = raw.startsWith("/") ? raw.slice(1) : raw;
+          setPreview(`${BACKEND_URL}${clean}`);               // "https://host/media/avatars/ava.jpg"
         }
       })
       .finally(() => setLoading(false));
   }, []);
 
-  const handleChange = (e) => {
+  /* ───── изменения полей ───── */
+  const handleChange = e =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const handleAvatarChange = (e) => {
+  /* ───── выбор нового аватара ───── */
+  const handleAvatarChange = e => {
     const file = e.target.files[0];
     if (file) {
       setAvatarFile(file);
-      setPreview(URL.createObjectURL(file));
+      setPreview(URL.createObjectURL(file)); // локальный превью
     }
   };
 
-  const handleSubmit = async (e) => {
+  /* ───── submit ───── */
+  const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("nickname", form.nickname);
-      if (avatarFile) {
-        formData.append("avatar_path", avatarFile);
-      }
+      const fd = new FormData();
+      fd.append("nickname", form.nickname.trim());
+      if (avatarFile) fd.append("avatar_path", avatarFile);
 
-      await apiClient.put("/users/update/", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await apiClient.put("/users/update/", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
 
       alert("Профиль обновлён");
-      window.location.reload(); // гарантированная перезагрузка для обновления аватара
-    } catch (err) {
+      navigate(0);                       // перезагрузка страницы
+    } catch {
       alert("Ошибка при обновлении профиля");
-    } finally {
       setLoading(false);
     }
   };
 
+  /* ───── UI ───── */
   if (loading) {
     return (
       <Container sx={{ textAlign: "center", mt: 8 }}>
@@ -99,6 +113,7 @@ const EditProfile = () => {
             InputProps={{ readOnly: true }}
             fullWidth
           />
+
           <TextField
             label="Email"
             name="email"
@@ -106,6 +121,7 @@ const EditProfile = () => {
             InputProps={{ readOnly: true }}
             fullWidth
           />
+
           <TextField
             label="Никнейм"
             name="nickname"
@@ -115,7 +131,7 @@ const EditProfile = () => {
           />
 
           <Box display="flex" alignItems="center" gap={2}>
-            <Avatar src={preview} sx={{ width: 64, height: 64 }} />
+            <Avatar src={preview || "/avatar.jpg"} sx={{ width: 64, height: 64 }} />
             <Button variant="outlined" component="label">
               Загрузить аватар
               <input type="file" hidden accept="image/*" onChange={handleAvatarChange} />
@@ -125,8 +141,8 @@ const EditProfile = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             disabled={loading}
+            sx={{ alignSelf: "flex-start" }}
           >
             Сохранить
           </Button>
@@ -134,6 +150,4 @@ const EditProfile = () => {
       </form>
     </Container>
   );
-};
-
-export default EditProfile;
+}

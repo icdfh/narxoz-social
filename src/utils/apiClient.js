@@ -1,67 +1,70 @@
+// src/utils/apiClient.js
+
 import axios from "axios";
 import { fetchProfile, logout } from "../store/authSlice";
 
-// 🔗 Базовый адрес API
-const API_BASE = "http://127.0.0.1:8000/api";
+// базовый URL из .env или по умолчанию
+const API_BASE =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.MODE === "production"
+    ? "https://159.65.124.242/api/"
+    : "http://127.0.0.1:8000/api/");
 
-// Загружаем store динамически
-let storePromise = import("../store/store").then((mod) => mod.store);
+// динамически подгружаем store для dispatch в интерсепторе
+let storePromise = import("../store/store").then((m) => m.store);
 
 const apiClient = axios.create({
   baseURL: API_BASE,
   headers: {
     "Content-Type": "application/json",
-    // Всегда ожидаем JSON, даже при ошибках
     Accept: "application/json",
   },
+  withCredentials: true,
 });
 
-// 👇 Подставляем access-токен
+// добавляем access-токен из localStorage
 apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("access") || localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
 
-// 👇 Обработка 401 и обновление токена
+// авто-рефреш при 401
 apiClient.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
+  (res) => res,
+  async (err) => {
+    const orig = err.config;
     if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
+      err.response?.status === 401 &&
+      !orig._retry &&
       localStorage.getItem("refresh")
     ) {
-      originalRequest._retry = true;
-
+      orig._retry = true;
       try {
-        const res = await axios.post(`${API_BASE}/users/token/refresh/`, {
-          refresh: localStorage.getItem("refresh"),
-        });
-        const newAccess = res.data.access;
-        localStorage.setItem("token", newAccess);
-        originalRequest.headers.Authorization = `Bearer ${newAccess}`;
+        const { data } = await axios.post(
+          `${API_BASE}users/token/refresh/`,
+          { refresh: localStorage.getItem("refresh") },
+          { headers: { "Content-Type": "application/json" } }
+        );
+        localStorage.setItem("access", data.access);
+        orig.headers.Authorization = `Bearer ${data.access}`;
 
-        // Обновим профиль, если меняется профиль
-        if (originalRequest.url.includes("/users/profile")) {
+        // если был запрос профиля — обновим его в Redux
+        if (orig.url.includes("/users/profile")) {
           const store = await storePromise;
           store.dispatch(fetchProfile());
         }
 
-        return apiClient(originalRequest);
-      } catch (refreshErr) {
+        return apiClient(orig);
+      } catch {
         const store = await storePromise;
         store.dispatch(logout());
-        console.warn("❌ Refresh-токен невалиден. Выполнен авто-logout.");
-        return Promise.reject(refreshErr);
+        console.warn("Refresh-токен невалиден, выполнен logout");
       }
     }
-
-    return Promise.reject(error);
+    return Promise.reject(err);
   }
 );
 

@@ -1,34 +1,42 @@
 // src/pages/Organizations.jsx
 
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate }     from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import apiClient from "../utils/apiClient";
+import apiClient           from "../utils/apiClient";
 import { loadOrganizations } from "../store/organizationSlice";
-import OrganizationCard from "../components/OrganizationCard";
 
-import groupsIcon from "../assets/icons/friends.svg";
+import groupsIcon   from "../assets/icons/friends.svg";
 import threeDotsIcon from "../assets/icons/more.svg";
-import chatIcon   from "../assets/icons/Chats.svg";
-import searchIcon from "../assets/icons/search.svg";
+import chatIcon     from "../assets/icons/Chats.svg";
+import searchIcon   from "../assets/icons/search.svg";
 
 import "../assets/css/Organizations.css";
 
-const BACKEND_URL = "http://127.0.0.1:8000";
+// вычисляем базовый адрес бэка из axios.baseURL без /api/
+const BACKEND_URL = apiClient.defaults.baseURL.replace(/\/api\/?$/, "");
+
+/** формирует абсолютный URL для аватара */
+const buildUrl = (path) => {
+  if (!path) return "/avatar.jpg";
+  if (/^https?:\/\//.test(path)) return path;
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  return `${BACKEND_URL}${clean}`;
+};
 
 export default function Organizations() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { list: orgs, loading, error } = useSelector((s) => s.organizations);
+  const { list: orgs, loading, error } = useSelector(s => s.organizations);
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filtered, setFiltered]       = useState([]);
-  const [outgoingReqs, setOutgoingReqs] = useState(new Set());
+  const [searchQuery,   setSearchQuery]   = useState("");
+  const [filtered,      setFiltered]      = useState([]);
+  const [outgoingReqs,  setOutgoingReqs]  = useState(new Set());
 
-  // загрузка организаций и исходящих запросов
+  // загрузка организаций + исходящих запросов
   useEffect(() => {
     dispatch(loadOrganizations());
-    apiClient.get("/friends/outgoing/").then((res) => {
+    apiClient.get("/friends/outgoing/").then(res => {
       const ids = (res.data || [])
         .filter(r => r.status === "pending")
         .map(r => r.to_user.id);
@@ -36,17 +44,14 @@ export default function Organizations() {
     });
   }, [dispatch]);
 
-  // поиск
+  // фильтрация по поиску
   useEffect(() => {
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
-      setFiltered(
-        orgs.filter(
-          (o) =>
-            o.full_name.toLowerCase().includes(q) ||
-            o.nickname.toLowerCase().includes(q)
-        )
-      );
+      setFiltered(orgs.filter(o =>
+        o.full_name.toLowerCase().includes(q) ||
+        o.nickname.toLowerCase().includes(q)
+      ));
     } else {
       setFiltered([]);
     }
@@ -54,35 +59,28 @@ export default function Organizations() {
 
   const toShow = filtered.length ? filtered : orgs;
 
-  const buildUrl = (path) => {
-    if (!path) return "/avatar.jpg";
-    if (/^https?:\/\//.test(path)) return path;
-    return `${BACKEND_URL}${path}`;
-  };
-
+  // начать чат
   const startChat = async (orgId) => {
     try {
       const { data } = await apiClient.post(`/chats/direct/${orgId}/`);
       navigate(`/messages/${data.chat_id}`);
     } catch (e) {
-      console.error(e);
+      console.error("Не удалось открыть чат:", e);
     }
   };
 
+  // отправить заявку в друзья
   const sendRequest = async (orgId) => {
     try {
       await apiClient.post(`/friends/send/${orgId}/`);
     } catch (e) {
-      // если уже есть активный запрос — считаем успешным
-      if (e.response?.data?.error === "Уже существует активный запрос") {
-        // noop
-      } else {
+      // если заявка уже есть — игнорируем
+      if (e.response?.data?.error !== "Уже существует активный запрос") {
         console.error(e);
         return;
       }
     }
-    // помечаем orgId как запрошенный
-    setOutgoingReqs((prev) => new Set(prev).add(orgId));
+    setOutgoingReqs(prev => new Set(prev).add(orgId));
   };
 
   if (loading) return <p className="friends-empty">Загрузка организаций…</p>;
@@ -93,7 +91,7 @@ export default function Organizations() {
     <div className="friends-page">
       <div className="friends-header">
         <div className="friends-header-left">
-          <img src={groupsIcon} className="friends-icon" alt="Organizations" />
+          <img src={groupsIcon}     className="friends-icon"    alt="Organizations" />
           <span className="friends-title">Organizations</span>
         </div>
         <div className="friends-header-right">
@@ -103,30 +101,30 @@ export default function Organizations() {
               className="friends-search-input"
               placeholder="Search organizations…"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
             />
-            <img src={searchIcon} className="friends-search-icon" alt="Search" />
+            <img
+              src={searchIcon}
+              className="friends-search-icon"
+              alt="Search"
+            />
           </div>
         </div>
       </div>
 
       <div className="friends-list">
-        {toShow.map((org) => {
+        {toShow.map(org => {
           const isPending = outgoingReqs.has(org.id);
           return (
             <div key={org.id} className="friend-card">
               <div className="friend-left">
                 <div className="avatar-wrap">
                   <img
-                    src={buildUrl(org.avatar_path)}
+                    src={buildUrl(org.avatar_path || org.avatar_url)}
                     className="friend-avatar"
                     alt={org.nickname}
                   />
-                  <span
-                    className={`friend-status ${
-                      org.is_online ? "online" : "offline"
-                    }`}
-                  />
+                  <span className={`friend-status ${org.is_online ? "online" : "offline"}`} />
                 </div>
                 <div className="friend-info">
                   <span className="friend-name">{org.full_name}</span>

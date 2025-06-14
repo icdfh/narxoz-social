@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProfile,
-  acceptPolicy,   // оставляем (флаг согласия)
-} from "../../store/authSlice";
+// src/pages/AccountSettings.jsx
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector }        from "react-redux";
+import { fetchProfile, acceptPolicy }      from "../../store/authSlice";
 import {
   Box,
   TextField,
@@ -12,15 +10,26 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import apiClient from "../../utils/apiClient";
+import apiClient                            from "../../utils/apiClient";
 import "../../assets/css/AccountSettings.css";
 
-function AccountSettings() {
+// базовый адрес бэка = axios.baseURL без /api/
+const BACKEND_URL = apiClient.defaults.baseURL.replace(/\/api\/?$/, "");
+
+/** собирает абсолютный URL для медиа */
+const buildUrl = (path) => {
+  if (!path) return "/avatar.jpg";
+  if (/^https?:\/\//.test(path)) return path;
+  const clean = path.startsWith("/") ? path.slice(1) : path;
+  return `${BACKEND_URL}${clean}`;
+};
+
+export default function AccountSettings() {
   const dispatch       = useDispatch();
-  const user           = useSelector((s) => s.auth.user);
+  const user           = useSelector(s => s.auth.user);
   const policyAccepted = user?.is_policy_accepted;
 
-  const [form, setForm] = useState({ full_name: "", email: "", nickname: "" });
+  const [form,    setForm]    = useState({ full_name:"", email:"", nickname:"" });
   const [preview, setPreview] = useState("/avatar.jpg");
   const [avatar,  setAvatar]  = useState(null);
 
@@ -28,26 +37,28 @@ function AccountSettings() {
   const [saving,  setSaving]  = useState(false);
   const fileRef = useRef();
 
-  /* ---------- загрузка профиля ---------- */
+  // загрузка профиля после принятия политики
   useEffect(() => {
     if (!policyAccepted) return;
     setLoading(true);
-    dispatch(fetchProfile())
-      .unwrap()
-      .then((d) => {
-        setForm({ full_name: d.full_name, email: d.email, nickname: d.nickname });
+    dispatch(fetchProfile()).unwrap()
+      .then(d => {
+        setForm({
+          full_name: d.full_name,
+          email:     d.email,
+          nickname:  d.nickname,
+        });
         setPreview(
-          d.avatar_path ? `http://127.0.0.1:8000${d.avatar_path}` : "/avatar.jpg"
+          buildUrl(d.avatar_path || d.avatar_url)
         );
       })
       .finally(() => setLoading(false));
   }, [dispatch, policyAccepted]);
 
-  /* ---------- handlers ---------- */
-  const onChange = (e) =>
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onChange = e =>
+    setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
-  const onFile = (e) => {
+  const onFile = e => {
     const f = e.target.files[0];
     if (f) {
       setAvatar(f);
@@ -55,43 +66,41 @@ function AccountSettings() {
     }
   };
 
-  /* ---------- submit ---------- */
-  const submit = async (e) => {
+  const submit = async e => {
     e.preventDefault();
     setSaving(true);
 
     try {
+      // выбираем multipart или JSON
       if (avatar) {
-        /* ----- multipart, когда есть файл ----- */
         const fd = new FormData();
-        fd.append("nickname", form.nickname);
+        fd.append("nickname",  form.nickname.trim());
         fd.append("avatar_path", avatar);
         fd.append("full_name", form.full_name);
-        fd.append("email", form.email);
-
+        fd.append("email",     form.email);
         await apiClient.put("/users/update/", fd, {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers:{ "Content-Type":"multipart/form-data" }
         });
       } else {
-        /* ----- обычный JSON, когда файла нет ----- */
         await apiClient.put("/users/update/", {
-          nickname:  form.nickname,
+          nickname:  form.nickname.trim(),
           full_name: form.full_name,
           email:     form.email,
         });
       }
 
-      await dispatch(acceptPolicy()).unwrap(); // флаг согласия
-      await dispatch(fetchProfile()).unwrap(); // перезагрузить данные
+      // сохраняем флаг политики и перезагружаем профиль
+      await dispatch(acceptPolicy()).unwrap();
+      await dispatch(fetchProfile()).unwrap();
+
       alert("Профиль обновлён!");
       setAvatar(null);
       fileRef.current.value = null;
     } catch (err) {
-      const msg =
-        err?.response?.data
-          ? JSON.stringify(err.response.data, null, 2)
-          : err.message;
-      alert("Ошибка:\n" + msg);
+      const msg = err.response?.data
+        ? JSON.stringify(err.response.data, null, 2)
+        : err.message;
+      alert("Ошибка при обновлении:\n" + msg);
       console.error("Update error:", msg);
     } finally {
       setSaving(false);
@@ -106,7 +115,6 @@ function AccountSettings() {
     );
   }
 
-  /* ---------- UI ---------- */
   return (
     <Box className="account-settings">
       <Typography variant="h5" className="acc-title">
@@ -137,7 +145,7 @@ function AccountSettings() {
         />
 
         <Box className="acc-avatar-row">
-          <Avatar src={preview} sx={{ width: 80, height: 80 }} />
+          <Avatar src={preview} sx={{ width:80, height:80 }} />
           <Button
             variant="outlined"
             component="label"
@@ -145,7 +153,13 @@ function AccountSettings() {
             className="acc-upload-btn"
           >
             Загрузить
-            <input hidden accept="image/*" type="file" onChange={onFile} ref={fileRef} />
+            <input
+              hidden
+              accept="image/*"
+              type="file"
+              onChange={onFile}
+              ref={fileRef}
+            />
           </Button>
           {avatar && (
             <Button
@@ -153,9 +167,7 @@ function AccountSettings() {
               onClick={() => {
                 setAvatar(null);
                 setPreview(
-                  user.avatar_path
-                    ? `http://127.0.0.1:8000${user.avatar_path}`
-                    : "/avatar.jpg"
+                  buildUrl(user.avatar_path || user.avatar_url)
                 );
                 fileRef.current.value = null;
               }}
@@ -177,5 +189,3 @@ function AccountSettings() {
     </Box>
   );
 }
-
-export default AccountSettings;

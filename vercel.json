@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/(.*)",   "destination": "https://159.65.124.242/api/$1" },
+    { "source": "/media/(.*)", "destination": "https://159.65.124.242/media/$1" }
+  ]
+}

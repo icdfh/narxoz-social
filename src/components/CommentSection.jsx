@@ -1,13 +1,8 @@
-/* --------------------------------------------------------------
-   Комментарии к посту + форма добавления
-   --------------------------------------------------------------
-   ▸ красиво стилизованы под CSS-классы страницы профиля
-   ▸ используют контейнеры MUI (Paper / List …)
-   ▸ для удаления – SVG-иконка (delete_icon.svg)
-   ▸ подтягивают аватар автора комментария:
-       - сервер может прислать  author  _или_ author_id –
-         берём то, что есть (c.author ?? c.author_id)
----------------------------------------------------------------- */
+/*  src/components/CommentSection.jsx
+    --------------------------------------------------------------
+    ▸ вывод комментариев к посту + форма добавления
+    ▸ стилизация под Narxoz-UI (MUI Paper / List …)
+    -------------------------------------------------------------- */
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -37,49 +32,56 @@ import {
 
 import deleteIconSvg from "../assets/icons/delete_icon.svg";
 
-/* helper: абсолютный URL для медиа */
-const fullUrl = p =>
+/* ───────── helpers ──────────────────────────────────────────── */
+// адрес бэка = baseURL axios-клиента без /api/
+const BACKEND_URL = apiClient.defaults.baseURL.replace(/\/api\/?$/, "");
+
+/** собираем абсолютный URL для медиа (аватар и т.п.) */
+const absUrl = (p) =>
   !p
     ? ""
-    : /^https?:\/\//.test(p)
+    : /^https?:\/\//.test(p)           // уже абсолютная
       ? p
-      : `${window.location.origin}${p.startsWith("/") ? "" : "/"}${p}`;
+      : `${BACKEND_URL}${p.startsWith("/") ? "" : "/"}${p}`;
 
+/* ───────── компонент ───────────────────────────────────────── */
 export default function CommentSection({ postId }) {
   const dispatch    = useDispatch();
-  const currentNick = useSelector(s => s.auth.user?.nickname);
+  const currentNick = useSelector((s) => s.auth.user?.nickname);
 
   const comments = useSelector(
-    s => s.posts.commentsByPost[postId] || [],
+    (s) => s.posts.commentsByPost[postId] || [],
     shallowEqual
   );
 
-  /* draft для текстового поля */
+  /* draft для поля ввода */
   const [draft, setDraft] = useState("");
 
   /* map { userId : avatarUrl } */
   const [avMap, setAvMap] = useState({});
 
   /* первый запрос комментариев */
-  useEffect(() => { dispatch(fetchComments(postId)); }, [dispatch, postId]);
+  useEffect(() => {
+    dispatch(fetchComments(postId));
+  }, [dispatch, postId]);
 
-  /* догружаем аватарки авторов, которых ещё нет в avMap */
+  /* догружаем аватары авторов, которых ещё нет в avMap */
   useEffect(() => {
     const missing = comments
-      .map(c => c.author ?? c.author_id)
-      .filter(id => id && !avMap[id]);
+      .map((c) => c.author ?? c.author_id)
+      .filter((id) => id && !avMap[id]);
 
     if (!missing.length) return;
 
     (async () => {
       const map = { ...avMap };
       await Promise.all(
-        missing.map(async id => {
+        missing.map(async (id) => {
           try {
             const { data } = await apiClient.get(`/users/profile/${id}/`);
-            map[id] = fullUrl(data.avatar_path || data.avatar_url);
+            map[id] = absUrl(data.avatar_path || data.avatar_url);
           } catch {
-            map[id] = "";                 /* fallback: инициалы */
+            map[id] = ""; // fallback: инициалы
           }
         })
       );
@@ -87,30 +89,24 @@ export default function CommentSection({ postId }) {
     })();
   }, [comments, avMap]);
 
-  /* helpers ------------------------------------------------------ */
-  const submit = e => {
+  /* ───────── handlers ───────── */
+  const submit = (e) => {
     e.preventDefault();
     const txt = draft.trim();
     if (!txt) return;
     dispatch(createComment({ postId, content: txt })).then(() => setDraft(""));
   };
 
-  const remove = id =>
-    dispatch(deleteComment({ postId, commentId: id }));
+  const remove = (id) => dispatch(deleteComment({ postId, commentId: id }));
 
-  /* render ------------------------------------------------------- */
+  /* ───────── JSX ───────── */
   return (
-   
     <Box sx={{ mt: 2, p: 2.5 }}>
-      
-      <Typography
-        variant="h6"
-        sx={{ mb: 1, color: "#fff", fontWeight: 500 }}
-      >
+      <Typography variant="h6" sx={{ mb: 1, color: "#fff", fontWeight: 500 }}>
         Комментарии&nbsp;({comments.length})
       </Typography>
 
-      {/* список */}
+      {/* список комментариев */}
       <Paper
         elevation={2}
         sx={{
@@ -133,7 +129,9 @@ export default function CommentSection({ postId }) {
                       {ava ? (
                         <Avatar src={ava} sx={{ width: 32, height: 32 }} />
                       ) : (
-                        <Avatar sx={{ bgcolor: "#D50032", width: 32, height: 32 }}>
+                        <Avatar
+                          sx={{ bgcolor: "#D50032", width: 32, height: 32 }}
+                        >
                           {c.author_nickname[0]?.toUpperCase()}
                         </Avatar>
                       )}
@@ -202,33 +200,33 @@ export default function CommentSection({ postId }) {
           onSubmit={submit}
           sx={{ display: "flex", gap: 1.2, mt: 2 }}
         >
-       <TextField
-  variant="filled"
-  size="small"
-  placeholder="Написать комментарий…"
-  value={draft}
-  onChange={e => setDraft(e.target.value)}
-  InputProps={{ disableUnderline: true }}
-  sx={{
-    flex: 1,
-    bgcolor: "#fff",
-    borderRadius: 1,
+          <TextField
+            variant="filled"
+            size="small"
+            placeholder="Написать комментарий…"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            InputProps={{ disableUnderline: true }}
+            sx={{
+              flex: 1,
+              bgcolor: "#fff",
+              borderRadius: 1,
 
-    /* 1️⃣ корневой FilledInput: центруем дочерний input по вертикали */
-    "& .MuiFilledInput-root": {
-      borderRadius: 1,
-      display: "flex",
-      alignItems: "center",        // ← главное
-    },
+              /* корневой FilledInput */
+              "& .MuiFilledInput-root": {
+                borderRadius: 1,
+                display: "flex",
+                alignItems: "center",
+              },
 
-    /* 2️⃣ сам input: убираем лишний верхний padding,
-          выравнивая текст точно посередине */
-    "& .MuiFilledInput-input": {
-      paddingTop: "10px",          // выставляем симметричные отступы
-      paddingBottom: "10px",
-    },
-  }}
-/>
+              /* сам input: ровно по центру */
+              "& .MuiFilledInput-input": {
+                paddingTop: "10px",
+                paddingBottom: "10px",
+              },
+            }}
+          />
+
           <Button
             type="submit"
             variant="contained"
